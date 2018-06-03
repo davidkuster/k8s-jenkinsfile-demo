@@ -1,0 +1,18 @@
+metadata:
+  annotations:
+    configmap.fabric8.io/update-on-change: ${project.artifactId}
+spec:
+  replicas: 3
+  revisionHistoryLimit: 5
+  strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+  template:
+    spec:
+      containers:
+        -
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "k8s-((NAMESPACE))"
